@@ -13,10 +13,10 @@ class App extends Component {
       <div>
         <Layout>
           <Switch>
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/auth" component={Auth} />
-            <Route path="/" exact component={BurgerBuilder} />
+            <Route path={`${process.env.PUBLIC_URL}/checkout`} component={Checkout} />
+            <Route path={`${process.env.PUBLIC_URL}/orders`} component={Orders} />
+            <Route path={`${process.env.PUBLIC_URL}/auth`} component={Auth} />
+            <Route path={`${process.env.PUBLIC_URL}/`} exact component={BurgerBuilder} />
           </Switch>
         </Layout>
       </div>
