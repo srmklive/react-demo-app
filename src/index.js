@@ -26,7 +26,7 @@ const store = createStore(rootReducer, composeEnhancers(
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter basename={'/react-demo-app'}>
+        <BrowserRouter>
             <App />
         </BrowserRouter>
     </Provider>
