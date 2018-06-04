@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
+import {updateObject} from "../utility";
 
 export const logout = () => {
     return {
@@ -64,5 +65,13 @@ export const auth = (email, password, isSignUp) => {
             console.log(error);
             dispatch(authFail(error.response.data.error));
         });
+    };
+};
+
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path
     };
 };
