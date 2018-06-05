@@ -60,8 +60,6 @@ export const auth = (email, password, isSignUp) => {
             url,
             authData
         ).then(response => {
-            console.log(response);
-
             localStorage.setItem('token', response.data.idToken);
             localStorage.setItem('userId', response.data.localId);
 
@@ -72,7 +70,6 @@ export const auth = (email, password, isSignUp) => {
             dispatch(authTimeout(response.data.expiresIn));
         })
         .catch(error => {
-            console.log(error);
             dispatch(authFail(error.response.data.error));
         });
     };
