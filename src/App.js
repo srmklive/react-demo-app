@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
@@ -12,26 +12,46 @@ import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/';
 
 class App extends Component {
-  componentDidMount() {
-      this.props.onTryAutoSignUp();
-  }
+    componentDidMount() {
+        this.props.onTryAutoSignUp();
+    }
 
-  render () {
-    return (
-      <div>
-        <Layout>
-          <Switch>
-            <Route path={`${process.env.PUBLIC_URL}/checkout`} component={Checkout} />
-            <Route path={`${process.env.PUBLIC_URL}/orders`} component={Orders} />
-            <Route path={`${process.env.PUBLIC_URL}/auth`} component={Auth} />
-            <Route path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
-            <Route path={`${process.env.PUBLIC_URL}/`} exact component={BurgerBuilder} />
-          </Switch>
-        </Layout>
-      </div>
-    );
-  }
+    render () {
+        let routes = (
+            <Switch>
+                <Route path={`${process.env.PUBLIC_URL}/auth`} component={Auth} />
+                <Route path={`${process.env.PUBLIC_URL}/`} exact component={BurgerBuilder} />
+                <Redirect to="/" />
+            </Switch>
+        );
+
+        if (this.props.isAuthenticated) {
+            routes = (
+                <Switch>
+                    <Route path={`${process.env.PUBLIC_URL}/checkout`} component={Checkout} />
+                    <Route path={`${process.env.PUBLIC_URL}/orders`} component={Orders} />
+                    <Route path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
+                    <Route path={`${process.env.PUBLIC_URL}/`} exact component={BurgerBuilder} />
+                    <Redirect to="/" />
+                </Switch>
+            );
+        }
+
+        return (
+            <div>
+                <Layout>
+                    {routes}
+                </Layout>
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -39,4 +59,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
