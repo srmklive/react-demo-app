@@ -30,6 +30,7 @@ class App extends Component {
                 <Switch>
                     <Route path={`${process.env.PUBLIC_URL}/checkout`} component={Checkout} />
                     <Route path={`${process.env.PUBLIC_URL}/orders`} component={Orders} />
+                    <Route path={`${process.env.PUBLIC_URL}/auth`} component={Auth} />
                     <Route path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
                     <Route path={`${process.env.PUBLIC_URL}/`} exact component={BurgerBuilder} />
                     <Redirect to="/" />
